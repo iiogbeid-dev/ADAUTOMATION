@@ -1,0 +1,83 @@
+services:
+  domain-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile.dc
+    hostname: ad-controller
+    container_name: ad-controller
+    init: true
+    privileged: true
+    environment:
+      SAMBA_DOMAIN: EXAMPLE
+      SAMBA_REALM: EXAMPLE.LOCAL
+      SAMBA_ADMIN_PASSWORD: ChangeMe123!
+      SAMBA_HOSTNAME: ad-controller
+    ports:
+      - '389:389'   # LDAP
+      - '445:445'   # SMB
+      - '636:636'   # LDAPS
+      - '3268:3268' # Global catalog
+      - '3269:3269'
+    volumes:
+      - dc-samba-data:/var/lib/samba
+      - dc-samba-etc:/etc/samba
+    networks:
+      - adlab
+
+  machine01:
+    build:
+      context: .
+      dockerfile: Dockerfile.host
+    hostname: machine01
+    container_name: ad-machine01
+    init: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    depends_on:
+      - domain-controller
+    environment:
+      HOSTNAME_OVERRIDE: machine01
+      JOIN_DOMAIN: 'true'
+      DOMAIN_REALM: EXAMPLE.LOCAL
+      DOMAIN_NETBIOS: EXAMPLE
+      DOMAIN_ADMIN_USER: Administrator
+      DOMAIN_ADMIN_PASSWORD: ChangeMe123!
+      DC_HOST: ad-controller
+    ports:
+      - '2221:22'
+    networks:
+      - adlab
+
+  machine02:
+    build:
+      context: .
+      dockerfile: Dockerfile.host
+    hostname: machine02
+    container_name: ad-machine02
+    init: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    depends_on:
+      - domain-controller
+    environment:
+      HOSTNAME_OVERRIDE: machine02
+      JOIN_DOMAIN: 'true'
+      DOMAIN_REALM: EXAMPLE.LOCAL
+      DOMAIN_NETBIOS: EXAMPLE
+      DOMAIN_ADMIN_USER: Administrator
+      DOMAIN_ADMIN_PASSWORD: ChangeMe123!
+      DC_HOST: ad-controller
+    ports:
+      - '2222:22'
+    networks:
+      - adlab
+
+networks:
+  adlab:
+    driver: bridge
+
+volumes:
+  dc-samba-data:
+  dc-samba-etc:

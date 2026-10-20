@@ -1,0 +1,50 @@
+[
+  {
+    "type": "PLAN_GENERATION_ERROR",
+    "prompt": "Create a new user named Alice Johnson and add her to the Helpdesk group.",
+    "error": "Failed to load model",
+    "stack": "Error: Failed to load model\n    at new LlamaModel (file:///home/aimakeradmin/ADAutomation/node_modules/node-llama-cpp/dist/llamaEvaluator/LlamaModel.js:50:23)\n    at file:///home/aimakeradmin/ADAutomation/backend/src/services/llm/llamaPlanner.js:12:16\n    at getModel (file:///home/aimakeradmin/ADAutomation/backend/src/services/llm/llamaPlanner.js:17:7)\n    at generatePlanYaml (file:///home/aimakeradmin/ADAutomation/backend/src/services/llm/llamaPlanner.js:23:23)\n    at Object.createPlan (file:///home/aimakeradmin/ADAutomation/backend/src/services/planService.js:40:28)\n    at [eval]:1:113",
+    "createdAt": "2025-10-16T17:24:30.164Z"
+  },
+  {
+    "type": "PLAN_GENERATION_ERROR",
+    "prompt": "Create a new user named Alice Johnson and add her to the Helpdesk group.",
+    "error": "Planner returned invalid YAML: Implicit keys need to be on a single line at line 1, column 1:\n\n```yaml\n^\n",
+    "stack": "PlanValidationError: Planner returned invalid YAML: Implicit keys need to be on a single line at line 1, column 1:\n\n```yaml\n^\n\n    at parseAndValidatePlanYaml (file:///home/aimakeradmin/ADAutomation/backend/src/utils/validatePlanYaml.js:137:11)\n    at Object.createPlan (file:///home/aimakeradmin/ADAutomation/backend/src/services/planService.js:45:43)\n    at async [eval]:1:95",
+    "createdAt": "2025-10-16T17:26:07.083Z"
+  },
+  {
+    "type": "PLAN_GENERATED",
+    "prompt": "Create a new user named Alice Johnson and add her to the Helpdesk group.",
+    "planYaml": "version: \"1.0\"\nmetadata:\n  intent: create_user\n  source_prompt: Create a new user named Alice Johnson and add her to the Helpdesk group\n  confidence: 1\nactions:\n- action: create_user\n  parameters:\n    username: alice_johnson\n    ou: OU=Users,DC=EXAMPLE,DC=LOCAL\n    display_name: Alice Johnson\n    email: alice.johnson@example.local\n    password: \"Password1234!\"\n    groups:\n    - Helpdesk",
+    "parsedPlan": {
+      "version": "1.0",
+      "metadata": {
+        "intent": "create_user",
+        "source_prompt": "Create a new user named Alice Johnson and add her to the Helpdesk group",
+        "confidence": 1
+      },
+      "actions": [
+        {
+          "action": "create_user",
+          "parameters": {
+            "username": "alice_johnson",
+            "ou": "OU=Users,DC=EXAMPLE,DC=LOCAL",
+            "display_name": "Alice Johnson",
+            "email": "alice.johnson@example.local",
+            "password": "Password1234!",
+            "groups": [
+              "Helpdesk"
+            ]
+          }
+        }
+      ]
+    },
+    "metadata": {
+      "intent": "create_user",
+      "source_prompt": "Create a new user named Alice Johnson and add her to the Helpdesk group",
+      "confidence": 1
+    },
+    "createdAt": "2025-10-16T17:27:51.887Z"
+  }
+]

@@ -1,0 +1,39 @@
+FROM debian:12-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    JOIN_DOMAIN=true \
+    DOMAIN_REALM=EXAMPLE.LOCAL \
+    DOMAIN_NETBIOS=EXAMPLE \
+    DOMAIN_ADMIN_USER=Administrator \
+    DOMAIN_ADMIN_PASSWORD=ChangeMe123! \
+    DC_HOST=ad-controller
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openssh-server \
+    krb5-user \
+    samba-common-bin \
+    winbind \
+    libnss-winbind \
+    libpam-winbind \
+    dnsutils \
+    netcat-openbsd \
+    iputils-ping \
+    jq \
+    vim-tiny \
+    sudo \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /var/run/sshd && \
+    echo "root:ChangeMe123!" | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+COPY scripts/host-entrypoint.sh /usr/local/bin/host-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/host-entrypoint.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["/usr/local/bin/host-entrypoint.sh"]

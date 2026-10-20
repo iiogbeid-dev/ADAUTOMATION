@@ -1,0 +1,87 @@
+.execution-console {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(18px);
+  min-height: 100%;
+}
+
+.execution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.execution-header h2 {
+  margin: 0;
+}
+
+.execution-header p {
+  margin: 0.35rem 0 0;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.execution-log {
+  border-radius: 1rem;
+  background: rgba(2, 6, 23, 0.85);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  padding: 1.25rem;
+  min-height: 220px;
+  overflow-y: auto;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.execution-empty {
+  text-align: center;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.log-line {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1rem;
+  font-family: 'JetBrains Mono', 'Fira Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.9rem;
+  align-items: baseline;
+  animation: fadeInLog 0.4s ease;
+}
+
+.log-time {
+  color: rgba(96, 165, 250, 0.8);
+}
+
+.log-text {
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.execution-footer {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.execution-footer code {
+  background: rgba(15, 23, 42, 0.9);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 0.8rem;
+}
+
+@keyframes fadeInLog {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

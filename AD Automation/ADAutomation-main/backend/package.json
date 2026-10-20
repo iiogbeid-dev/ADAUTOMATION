@@ -1,0 +1,35 @@
+{
+  "name": "automation-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Express API scaffold for the AI IT automation demo.",
+  "scripts": {
+    "dev": "nodemon --watch src src/server.js",
+    "start": "node src/server.js",
+    "lint": "eslint",
+    "format": "prettier --write \"src/**/*.{js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,json}\"",
+    "test": "node --test",
+    "llm:prompt": "node scripts/llmPrompt.js"
+  },
+  "dependencies": {
+    "@node-llama-cpp/linux-x64-cuda": "^3.14.0",
+    "ad-automation": "file:..",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "node-llama-cpp": "^3.14.0",
+    "yaml": "^2.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.2.5"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ad-automation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Skeleton workspace for an AI-assisted IT automation demo (backend + frontend).",
+  "workspaces": [
+    "backend",
+    "client"
+  ],
+  "scripts": {
+    "dev": "npm run infra:up && node scripts/dev.js",
+    "dev:runtime": "concurrently \"npm --prefix backend run dev\" \"npm --prefix client run dev -- --host 0.0.0.0\"",
+    "infra:up": "docker compose -f infrastructure/ad-lab/docker-compose.yml --project-name ad-lab down -v --remove-orphans && docker compose -f infrastructure/ad-lab/docker-compose.yml --project-name ad-lab up -d",
+    "build": "npm --prefix client run build",
+    "lint": "npm --prefix backend run lint && npm --prefix client run lint",
+    "formatter:check": "npm --prefix backend run format:check && npm --prefix client run format:check",
+    "formatter:write": "npm --prefix backend run format && npm --prefix client run format"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
